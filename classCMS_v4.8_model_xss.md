@@ -18,10 +18,10 @@ V4.8
 `/index.php/admin`
 
 ## Vulnerability Details
-In the model management page, the `model_name` parameter does not properly sanitize and escape user inputs. This allows attackers to inject malicious scripts that are stored in the database and automatically executed when other users access the affected page. This vulnerability could lead to sensitive information leakage or user session hijacking.
+In the model management page, the `uri` parameter does not properly sanitize and escape user inputs. This allows attackers to inject malicious scripts that are stored in the database and automatically executed when other users access the affected page. This vulnerability could lead to sensitive information leakage or user session hijacking.
 
 ## Proof of Vulnerability
 
-1. On the model management page, in the "Add Model" functionality, inject the following payload into the `model_name` field:
+1. On the model management page, in the "Add Model" functionality, inject the following payload into the `uri` field:
    ```html
    <img src=x onerror=alert(1) />
