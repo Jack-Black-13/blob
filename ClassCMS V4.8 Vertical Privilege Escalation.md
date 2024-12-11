@@ -60,6 +60,13 @@ username=a&hash=a&enabled=on&rolehash%5B0%5D=admin&passwd=&passwd_2=
 ```http
 username=admin&hash=admin&enabled=on&rolehash%5B0%5D=aaa&passwd=&passwd_2=
 ```
+![image](https://github.com/user-attachments/assets/25b9bdb5-d55d-4fff-bbbf-6f178fa05b78)
 
 This will change the sole admin user in the admin group to the aaa group, effectively stripping it of all privileges.
+![image](https://github.com/user-attachments/assets/d51a419a-e756-461a-8285-de418107554d)
+
+This action is irreversible, and the admin account will permanently lose its admin group privileges. This method can be used to disrupt the website.
+
+tisp: I have tried various methods, and no matter what permissions the `aaa` user group is given, as long as the `admin` user is moved to the `aaa` group, the `admin` user can never return to the `admin` group, especially when the `admin` group only has the `admin` user.
+
 
